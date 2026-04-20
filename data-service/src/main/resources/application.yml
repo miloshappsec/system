@@ -1,0 +1,15 @@
+server:
+  port: 8082
+
+spring:
+  datasource:
+    url: jdbc:mariadb://mariadb:3306/bankdb
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml

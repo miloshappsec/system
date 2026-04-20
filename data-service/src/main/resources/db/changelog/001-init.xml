@@ -1,0 +1,39 @@
+<databaseChangeLog>
+
+    <changeSet id="1" author="you">
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="VARCHAR(50)"/>
+            <column name="password" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(100)"/>
+            <column name="bankNumber" type="VARCHAR(100)"/>
+            <column name="balance" type="DECIMAL(15,2)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="you">
+        <createTable tableName="employees">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(100)"/>
+            <column name="role" type="VARCHAR(50)"/>
+            <column name="salary" type="DECIMAL(10,2)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="you">
+        <createTable tableName="transactions">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="sender_id" type="BIGINT"/>
+            <column name="receiver_id" type="BIGINT"/>
+            <column name="amount" type="DECIMAL(15,2)"/>
+            <column name="timestamp" type="DATETIME"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

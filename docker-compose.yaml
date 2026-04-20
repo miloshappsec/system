@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:11
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: bankdb
+    ports:
+      - "3306:3306"
+
+  data-service:
+    build: ./data-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mariadb
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "8081:8081"
+
+  api-gateway:
+    build: ./api-gateway
+    ports:
+      - "8080:8080"
