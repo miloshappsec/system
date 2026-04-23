@@ -10,18 +10,36 @@ services:
       - "3306:3306"
 
   data-service:
-    build: ./data-service
+    build:
+      context: .
+      dockerfile: data-service/Dockerfile
+    container_name: data-service
     ports:
       - "8082:8082"
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_started
 
   auth-service:
-    build: ./auth-service
+    build:
+      context: .
+      dockerfile: auth-service/Dockerfile
+    container_name: auth-service
     ports:
       - "8081:8081"
+    depends_on:
+      data-service :
+        condition: service_started
 
   api-gateway:
-    build: ./api-gateway
+    build:
+      context: .
+      dockerfile: api-gateway/Dockerfile
+    container_name: api-gateway
     ports:
       - "8080:8080"
+    depends_on:
+      auth-service:
+        condition: service_started
+      data-service:
+        condition: service_started

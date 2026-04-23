@@ -6,6 +6,8 @@ spring:
     url: jdbc:mariadb://mariadb:3306/bankdb
     username: root
     password: root
+    driver-class-name: org.mariadb.jdbc.Driver
+
 
   jpa:
     hibernate:
