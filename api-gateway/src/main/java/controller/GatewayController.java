@@ -1,11 +1,11 @@
 package controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -14,11 +14,19 @@ public class GatewayController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping("/users/{id}")
-    public String getUser(@PathVariable Long id) {
-        return restTemplate.getForObject(
-                "http://data-service/data/users/" + id,
+    @PostMapping("/auth/login")
+    public ResponseEntity<String> login(@RequestBody Map<String, Object> body) {
+
+        String url = "http://auth-service:8081/auth/login";
+
+        ResponseEntity<String> response = restTemplate.postForEntity(
+                url,
+                body,
                 String.class
         );
+
+        return ResponseEntity
+                .status(response.getStatusCode())
+                .body(response.getBody());
     }
 }

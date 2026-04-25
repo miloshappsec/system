@@ -1,7 +1,8 @@
 package controller;
 
 
-import org.apache.catalina.User;
+
+import model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,13 +27,13 @@ public class AuthController {
 
         // calls data-service
         User user = restTemplate.getForObject(
-                "http://data-service/data/users/1",
+                "http://data-service/data/users/" + username,
                 User.class
         );
 
-//        if (user != null && user.getPassword().equals(password)) {
-//            return "OK";
-//        }
+        if (user != null && user.getPassword().equals(password)) {
+            return "OK";
+        }
 
         return "FAIL";
     }

@@ -9,6 +9,7 @@
             <column name="password" type="VARCHAR(255)"/>
             <column name="email" type="VARCHAR(100)"/>
             <column name="bankNumber" type="VARCHAR(100)"/>
+            <column name="role" type="VARCHAR(50)"/>
             <column name="balance" type="DECIMAL(15,2)"/>
         </createTable>
     </changeSet>
@@ -34,6 +35,18 @@
             <column name="amount" type="DECIMAL(15,2)"/>
             <column name="timestamp" type="DATETIME"/>
         </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="you">
+        <insert tableName="users">
+            <column name="id" valueNumeric="1"/>
+            <column name="username" value="admin"/>
+            <column name="password" value="admin"/>
+            <column name="email" value="admin@bank.local"/>
+            <column name="role" value="admin"/>
+            <column name="balance" valueNumeric="1000000"/>
+
+        </insert>
     </changeSet>
 
 </databaseChangeLog>

@@ -25,4 +25,5 @@ public class User {
     private String email;
     private String bankNumber;
     private BigDecimal balance;
+    private String role;
 }

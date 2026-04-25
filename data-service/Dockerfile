@@ -5,7 +5,7 @@ RUN mvn clean install
 
 FROM eclipse-temurin:21-jdk
 WORKDIR /app
-COPY --from=builder /build/auth-service/target/*.jar app.jar
+COPY --from=builder /build/data-service/target/*.jar app.jar
 
 EXPOSE 8082
 ENTRYPOINT ["java", "-jar", "app.jar"]
