@@ -120,7 +120,7 @@ The system includes (but is not limited to):
 * No input validation
 * Potential for SQL injection (if extended)
 * Sensitive data exposure via APIs
-* Hardcoded service communication
+* Hardcoded com.bank.service communication
 
 ---
 
@@ -132,7 +132,7 @@ You can use this project to practice:
 * Privilege escalation
 * Data exposure attacks
 * API abuse
-* Service-to-service exploitation
+* Service-to-com.bank.service exploitation
 
 ---
 

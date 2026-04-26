@@ -1,4 +1,8 @@
-<databaseChangeLog>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
 
     <changeSet id="1" author="you">
         <createTable tableName="users">
@@ -8,7 +12,7 @@
             <column name="username" type="VARCHAR(50)"/>
             <column name="password" type="VARCHAR(255)"/>
             <column name="email" type="VARCHAR(100)"/>
-            <column name="bankNumber" type="VARCHAR(100)"/>
+            <column name="bank_number" type="VARCHAR(100)"/>
             <column name="role" type="VARCHAR(50)"/>
             <column name="balance" type="DECIMAL(15,2)"/>
         </createTable>

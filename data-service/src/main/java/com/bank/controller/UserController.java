@@ -1,34 +1,32 @@
-package controller;
+package com.bank.controller;
 
-import model.User;
+import com.bank.model.User;
+import com.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
-import service.UserService;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/data/users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-
-    @GetMapping("/users/{id}")
-    public User get(@PathVariable Long id) {
+    @GetMapping("/id/{id}")
+    public User getById(@PathVariable Long id) {
         return userService.findUserById(id);
     }
 
-    @GetMapping("/users/{username}")
-    public User get(@PathVariable String username) {
+    @GetMapping("/username/{username}")
+    public User getByUsername(@PathVariable String username) {
         return userService.findUserByUsername(username);
     }
 
 
-    @PostMapping("/users")
+    @PostMapping("/all")
     public List<User> get(@RequestBody Map<String, String> body) {
         String username = body.get("username");
         String password = body.get("password");

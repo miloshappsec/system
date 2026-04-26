@@ -1,8 +1,8 @@
-package service;
+package com.bank.service;
 
+import com.bank.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

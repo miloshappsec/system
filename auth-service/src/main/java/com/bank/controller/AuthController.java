@@ -1,8 +1,8 @@
-package controller;
+package com.bank.controller;
 
 
 
-import model.User;
+import com.bank.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

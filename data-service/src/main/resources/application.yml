@@ -6,12 +6,21 @@ spring:
     url: jdbc:mariadb://mariadb:3306/bankdb
     username: root
     password: root
-    driver-class-name: org.mariadb.jdbc.Driver
-
+    hikari:
+      initialization-fail-timeout: 60000
+      connection-timeout: 30000
 
   jpa:
     hibernate:
       ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MariaDBDialect
 
   liquibase:
+    enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
+
+  logging:
+    level:
+      liquibase: DEBUG

@@ -8,6 +8,11 @@ services:
       MYSQL_DATABASE: bankdb
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
   data-service:
     build:
@@ -18,7 +23,12 @@ services:
       - "8082:8082"
     depends_on:
       mariadb:
-        condition: service_started
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   auth-service:
     build:
@@ -29,7 +39,12 @@ services:
       - "8081:8081"
     depends_on:
       data-service :
-        condition: service_started
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   api-gateway:
     build:
@@ -40,6 +55,11 @@ services:
       - "8080:8080"
     depends_on:
       auth-service:
-        condition: service_started
+        condition: service_healthy
       data-service:
-        condition: service_started
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
