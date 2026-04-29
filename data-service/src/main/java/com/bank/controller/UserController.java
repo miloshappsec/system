@@ -1,6 +1,7 @@
 package com.bank.controller;
 
 import com.bank.model.User;
+import com.bank.service.KafkaProducerService;
 import com.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private KafkaProducerService kafkaProducerService;
 
     @GetMapping("/id/{id}")
     public User getById(@PathVariable Long id) {
@@ -35,5 +39,12 @@ public class UserController {
             return userService.getAllUsers();
         }
         return null;
+    }
+
+    @PostMapping("create")
+    public User create(@RequestBody User user) {
+        userService.createUser(user);
+        kafkaProducerService.sendUserCreatedEvent(user.getUsername());
+        return user;
     }
 }

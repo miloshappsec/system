@@ -3,6 +3,7 @@ package com.bank.service;
 import com.bank.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 public class UserService {
+
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -39,5 +41,9 @@ public class UserService {
         return (ArrayList<User>) entityManager
                 .createNativeQuery(sql, User.class)
                 .getSingleResult();
+    }
+
+    public void createUser(User user) {
+
     }
 }

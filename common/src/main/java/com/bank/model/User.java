@@ -2,6 +2,7 @@ package com.bank.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.kafka.common.protocol.types.Field;
 
 import java.math.BigDecimal;
 
@@ -14,6 +15,7 @@ public class User {
     private String password;
     private String email;
     private BigDecimal balance;
+    private String bankNumber;
 
     // getters & setters
 }

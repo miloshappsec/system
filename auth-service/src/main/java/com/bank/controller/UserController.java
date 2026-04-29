@@ -1,7 +1,6 @@
 package com.bank.controller;
 
 
-
 import com.bank.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,33 +9,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Map;
-
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
+@RequestMapping("/create")
+public class UserController {
 
     @Autowired
     private RestTemplate restTemplate;
 
-    @PostMapping("/login")
-    public String login(@RequestBody Map<String, String> body) {
+    @PostMapping("/user")
+    public String login(@RequestBody User user) {
 
-        String username = body.get("username");
-        String password = body.get("password");
 
-        // calls data-service
-        User user = restTemplate.getForObject(
-                "http://data-service/data/users/" + username,
-                User.class
+        Boolean created = restTemplate.postForObject(
+                "http://data-service/data/users/", user,
+                Boolean.class
         );
 
-        if (user != null && user.getPassword().equals(password)) {
+        if (created) {
             return "OK";
         }
 
         return "FAIL";
     }
-
 
 }
