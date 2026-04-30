@@ -129,7 +129,7 @@ jobs:
           name: security-reports
           path: |
             gitleaks-report.sarif
-            semgrep.sarif
+            security-reports/semgrep.sarif
             nmap-report.txt
             zap-report.html
             trivy-report.txt
