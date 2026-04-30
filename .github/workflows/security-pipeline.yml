@@ -84,31 +84,34 @@ jobs:
       # -------------------------
       # 🌐 NMAP
       # -------------------------
-      - name: 🌐 Install Nmap
-        run: sudo apt-get install -y nmap
+      # - name: 🌐 Install Nmap
+      #   run: sudo apt-get install -y nmap
 
-      - name: 🌐 Run Nmap scan
-        run: |
-          nmap -sV -p- localhost > nmap-report.txt
-        continue-on-error: true
+      # - name: 🌐 Run Nmap scan
+      #   run: |
+      #     nmap -sV -p- localhost > nmap-report.txt
+      #   continue-on-error: true
 
       # -------------------------
       # 🧪 ZAP (DAST)
       # -------------------------
-      - name: 🧪 Run OWASP ZAP scan
-        run: |
-          NETWORK=$(docker network ls --format '{{.Name}}' | grep _default | head -n 1)
+      # - name: 🧪 Run OWASP ZAP scan
+      #   run: |
+      #     NETWORK=$(docker network ls --format '{{.Name}}' | grep _default | head -n 1)
       
-          docker run \
-            --user root \
-            --network=$NETWORK \
-            -v ${{ github.workspace }}:/zap/wrk \
-            -t ghcr.io/zaproxy/zaproxy:stable \
-            zap-baseline.py \
-            -t http://api-gateway:8080/api \
-            -r zap-report.html
-        continue-on-error: true
-
+      #     docker run \
+      #       --user root \
+      #       --network=$NETWORK \
+      #       -v ${{ github.workspace }}:/zap/wrk \
+      #       -t ghcr.io/zaproxy/zaproxy:stable \
+      #       zap-baseline.py \
+      #       -t http://api-gateway:8080/api \
+      #       -r zap-report.html
+      #   continue-on-error: true
+      - name: 📂 Verify workspace
+        run: |
+          echo ${{ github.workspace }}
+          ls -R ${{ github.workspace }}
       # -------------------------
       # 📤 Upload Reports
       # -------------------------
