@@ -86,13 +86,15 @@ jobs:
       # -------------------------
       - name: 🧪 Run OWASP ZAP scan
         run: |
+          NETWORK=$(docker network ls --format '{{.Name}}' | grep _default | head -n 1)
+      
           docker run \
-          --network=app-network \
-          -v ${{ github.workspace }}:/zap/wrk \
-          -t ghcr.io/zaproxy/zaproxy:stable \
-          zap-baseline.py \
-          -t http://api-gateway:8080 \
-          -r zap-report.html
+            --network=$NETWORK \
+            -v ${{ github.workspace }}:/zap/wrk \
+            -t ghcr.io/zaproxy/zaproxy:stable \
+            zap-baseline.py \
+            -t http://api-gateway:8080 \
+            -r zap-report.html
         continue-on-error: true
 
       # -------------------------
