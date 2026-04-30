@@ -49,13 +49,13 @@ jobs:
       - name: 🔐 Run Gitleaks (full control)
         run: |
           docker run --rm \
-          -v ${{ github.workspace }}:/repo \
-          ghcr.io/gitleaks/gitleaks:latest \
-          detect \
-          --source /repo \
-          --report-format sarif \
-          --report-path gitleaks-report.json \
-          --log-opts="--all"
+            -v ${{ github.workspace }}:/repo \
+            ghcr.io/gitleaks/gitleaks:latest \
+            detect \
+            --source /repo \
+            --report-format sarif \
+            --report-path /repo/gitleaks-report.sarif \
+            --log-opts="--all"
         continue-on-error: true
 
       # -------------------------
@@ -121,7 +121,7 @@ jobs:
         with:
           name: security-reports
           path: |
-            gitleaks-report.json
+            gitleaks-report.sarif
             nmap-report.txt
             zap-report.html
             trivy-report.txt
