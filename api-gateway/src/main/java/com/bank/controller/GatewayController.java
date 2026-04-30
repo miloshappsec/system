@@ -29,4 +29,12 @@ public class GatewayController {
                 .status(response.getStatusCode())
                 .body(response.getBody());
     }
+
+    @GetMapping
+    public Map<String, String> endpoints() {
+        return Map.of(
+                "users", "/data/users/1",
+                "login", "/auth/login"
+        );
+    }
 }
