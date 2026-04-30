@@ -54,7 +54,7 @@ jobs:
           detect \
           --source /repo \
           --report-format sarif \
-          --report-path /repo/gitleaks-report.sarif \
+          --report-path gitleaks-report.json \
           --log-opts="--all"
         continue-on-error: true
 
