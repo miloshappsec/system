@@ -46,10 +46,16 @@ jobs:
       # -------------------------
       # 🔑 GITLEAKS
       # -------------------------
-      - name: 🔐 Run Gitleaks scan
-        uses: gitleaks/gitleaks-action@v2
-        with:
-          args: detect --source . --report-path gitleaks-report.json --report-format json
+      - name: 🔐 Run Gitleaks (full control)
+        run: |
+          docker run --rm \
+          -v ${{ github.workspace }}:/repo \
+          ghcr.io/gitleaks/gitleaks:latest \
+          detect \
+          --source /repo \
+          --report-format sarif \
+          --report-path /repo/gitleaks-report.sarif \
+          --log-opts="--all"
         continue-on-error: true
 
       # -------------------------
