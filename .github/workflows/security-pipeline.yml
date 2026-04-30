@@ -59,6 +59,14 @@ jobs:
         continue-on-error: true
 
       # -------------------------
+      # 🔑 TruffleHog
+      # -------------------------
+      - name: 🔐 Run TruffleHog
+        uses: trufflesecurity/trufflehog@v3.63.2
+        with:
+          path: .
+          
+      # -------------------------
       # 🐳 TRIVY (container scan)
       # -------------------------
       - name: 🐳 Scan Docker images with Trivy
@@ -100,6 +108,11 @@ jobs:
       # -------------------------
       # 📤 Upload Reports
       # -------------------------
+      - name: 📤 Upload Gitleaks Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-report
+          path: results.sarif
       - name: 📤 Upload Reports
         uses: actions/upload-artifact@v4
         with:
