@@ -87,7 +87,8 @@ jobs:
       - name: 🧪 Run OWASP ZAP scan
         run: |
           docker run \
-          --network=$(docker network ls --format '{{.Name}}' | grep default | head -n 1) \
+          --network=app-network \
+          -v ${{ github.workspace }}:/zap/wrk \
           -t ghcr.io/zaproxy/zaproxy:stable \
           zap-baseline.py \
           -t http://api-gateway:8080 \
