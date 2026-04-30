@@ -89,6 +89,7 @@ jobs:
           NETWORK=$(docker network ls --format '{{.Name}}' | grep _default | head -n 1)
       
           docker run \
+            --user root \
             --network=$NETWORK \
             -v ${{ github.workspace }}:/zap/wrk \
             -t ghcr.io/zaproxy/zaproxy:stable \
