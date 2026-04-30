@@ -108,10 +108,10 @@ jobs:
       #       -t http://api-gateway:8080/api \
       #       -r zap-report.html
       #   continue-on-error: true
-      - name: 📂 Verify workspace
+      - name: 📂 Show security reports
         run: |
-          echo ${{ github.workspace }}
-          ls -R ${{ github.workspace }}
+          ls -R security-reports
+        working-directory: ${{ github.workspace }}
       # -------------------------
       # 📤 Upload Reports
       # -------------------------
@@ -129,7 +129,7 @@ jobs:
           name: security-reports
           path: |
             gitleaks-report.sarif
-            /src/security-reports/semgrep.sarif
+            semgrep.sarif
             nmap-report.txt
             zap-report.html
             trivy-report.txt
