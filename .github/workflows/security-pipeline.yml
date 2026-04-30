@@ -85,10 +85,10 @@ jobs:
       # 🧪 ZAP (DAST)
       # -------------------------
       - name: 🧪 Run OWASP ZAP scan
-        run: |
-          docker run --network=host -t owasp/zap2docker-stable zap-baseline.py \
-          -t http://localhost:8080 \
-          -r zap-report.html
+        run: docker run --network=$(docker network ls --format '{{.Name}}' | grep default | head -n 1) \
+              -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
+              -t http://api-gateway:8080 \
+              -r zap-report.html
         continue-on-error: true
 
       # -------------------------
