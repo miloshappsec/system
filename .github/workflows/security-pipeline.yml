@@ -45,7 +45,7 @@ jobs:
             semgrep \
             --config=auto \
             --sarif \
-            --output=/repo/semgrep.sarif
+            --output=/src/security-reports/semgrep.sarif
 
       # -------------------------
       # 🔑 GITLEAKS
@@ -126,7 +126,7 @@ jobs:
           name: security-reports
           path: |
             gitleaks-report.sarif
-            semgrep.sarif
+            /src/security-reports/semgrep.sarif
             nmap-report.txt
             zap-report.html
             trivy-report.txt
