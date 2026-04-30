@@ -94,7 +94,7 @@ jobs:
             -v ${{ github.workspace }}:/zap/wrk \
             -t ghcr.io/zaproxy/zaproxy:stable \
             zap-baseline.py \
-            -t http://api-gateway:8080 \
+            -t http://api-gateway:8080/api \
             -r zap-report.html
         continue-on-error: true
 
