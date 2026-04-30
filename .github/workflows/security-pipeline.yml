@@ -38,10 +38,14 @@ jobs:
       # 🔍 SAST (Semgrep)
       # -------------------------
       - name: 🔍 Run Semgrep
-        uses: returntocorp/semgrep-action@v1
-        with:
-          config: "auto"
-        continue-on-error: true
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/src \
+            returntocorp/semgrep \
+            semgrep \
+            --config=auto \
+            --sarif \
+            --output=/repo/semgrep.sarif
 
       # -------------------------
       # 🔑 GITLEAKS
@@ -122,6 +126,7 @@ jobs:
           name: security-reports
           path: |
             gitleaks-report.sarif
+            semgrep.sarif
             nmap-report.txt
             zap-report.html
             trivy-report.txt
