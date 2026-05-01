@@ -78,7 +78,7 @@ jobs:
         with:
           image-ref: 'data-service'
           format: 'table'
-          output: 'trivy-report.txt'
+          output: '/src/trivy-report.txt'
         continue-on-error: true
 
       # -------------------------
@@ -112,6 +112,9 @@ jobs:
       # -------------------------
       # 📤 Upload Reports
       # -------------------------
+      - name: 📂 Debug Semgrep output
+        run: |
+          echo "WORKSPACE: ${{ github.workspace }}"
       - name: 🔍 Debug files
         run: |
           echo "=== ROOT ==="
