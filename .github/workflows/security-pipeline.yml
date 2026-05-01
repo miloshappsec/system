@@ -45,7 +45,7 @@ jobs:
             semgrep \
             --config=auto \
             --sarif \
-            --output=/src/security-reports/semgrep.sarif
+            --output=/src/semgrep.sarif
 
       # -------------------------
       # 🔑 GITLEAKS
@@ -108,10 +108,7 @@ jobs:
       #       -t http://api-gateway:8080/api \
       #       -r zap-report.html
       #   continue-on-error: true
-      - name: 📂 Show security reports
-        run: |
-          ls -R security-reports
-        working-directory: ${{ github.workspace }}
+ 
       # -------------------------
       # 📤 Upload Reports
       # -------------------------
@@ -129,7 +126,7 @@ jobs:
           name: security-reports
           path: |
             gitleaks-report.sarif
-            security-reports/semgrep.sarif
+            semgrep.sarif
             nmap-report.txt
             zap-report.html
             trivy-report.txt
