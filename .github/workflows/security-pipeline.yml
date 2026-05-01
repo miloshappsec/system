@@ -66,10 +66,13 @@ jobs:
       # 🔑 TruffleHog
       # -------------------------
       - name: 🔐 Run TruffleHog
-        uses: trufflesecurity/trufflehog@v3.63.2
-        with:
-          path: .
-          
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/repo \
+            ghcr.io/trufflesecurity/trufflehog:latest \
+            filesystem /repo \
+            --json > trufflehog-report.json
+            
       # -------------------------
       # 🐳 TRIVY (container scan)
       # -------------------------
@@ -137,4 +140,4 @@ jobs:
             nmap-report.txt
             zap-report.html
             trivy-report.txt
-            target/dependency-check-report.html
+            trufflehog-report.json
