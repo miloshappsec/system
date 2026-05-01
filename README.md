@@ -2,45 +2,76 @@
 
 ## 📌 Overview
 
-This project is a deliberately vulnerable banking application built for **application security training and experimentation**. It is designed using a **microservices architecture** with Java 21, Spring Boot, and MariaDB, and includes intentional security flaws for hands-on learning.
+This project is a **deliberately vulnerable banking system** designed for hands-on **Application Security (AppSec)
+training**.
 
-The goal is to simulate real-world insecure systems and practice identifying, exploiting, and eventually fixing vulnerabilities.
+It simulates a real-world microservices environment where users can:
+
+* explore vulnerabilities
+* practice exploitation techniques
+* analyze insecure system behavior
+
+The application intentionally contains flaws across multiple layers (API, authentication, data handling, and
+infrastructure).
+
+---
+
+## 🎯 Purpose
+
+This project is meant to:
+
+* Teach **offensive security techniques**
+* Simulate **real-world insecure architecture**
+* Encourage use of tools like:
+
+    * Burp Suite / OWASP ZAP
+    * Nmap
+    * Semgrep
+    * Trivy
+* Serve as a base for **DevSecOps and security experimentation**
 
 ---
 
 ## 🏗️ Architecture
 
-The system is composed of the following services:
+The system follows a **microservices architecture**:
 
 * **API Gateway**
 
-  * Entry point for client requests
-  * Routes traffic to backend services
+    * Entry point for all requests
 
 * **Auth Service**
 
-  * Handles login functionality
-  * Intentionally weak authentication logic
+    * Handles authentication
+    * Intentionally weak logic
 
 * **Data Service**
 
-  * Handles all database operations
-  * Exposes REST endpoints for CRUD operations
+    * Handles database operations
+    * Exposes vulnerable endpoints
+
+* **Event Service (Kafka)**
+
+    * Processes asynchronous events
+    * Stores event data
+    * Potential attack surface for message manipulation
 
 * **MariaDB**
 
-  * Relational database storing application data
+    * Main data storage
 
 ---
 
-## ⚙️ Technologies Used
+## ⚙️ Technologies
 
 * Java 21
 * Spring Boot
 * Maven (multi-module)
 * MariaDB
-* Liquibase (database migrations)
+* Liquibase
 * Docker & Docker Compose
+* Apache Kafka
+* GitHub Actions (security pipeline)
 
 ---
 
@@ -50,115 +81,115 @@ The system is composed of the following services:
 
 * Java 21
 * Maven
-* Docker & Docker Compose
+* Docker
 
 ---
 
-### 🔧 Build the Project
+### 🔧 Build
 
-```
+```bash
 mvn clean install
 ```
 
 ---
 
-### 🐳 Run the Application
+### 🐳 Run
 
-```
-docker-compose up --build
-```
-
----
-
-### 🌐 Services & Ports
-
-| Service      | Port |
-| ------------ | ---- |
-| API Gateway  | 8080 |
-| Auth Service | 8081 |
-| Data Service | 8082 |
-| MariaDB      | 3306 |
-
----
-
-## 🔌 Example Endpoints
-
-### Login
-
-```
-POST /auth/login
-```
-
-### Get User
-
-```
-GET /api/users/{id}
-```
-
-### Create User
-
-```
-POST /data/users
+```bash
+docker compose up --build
 ```
 
 ---
 
-## ⚠️ Security Disclaimer
+## 🌐 Services
 
-This application is **intentionally insecure** and should **NOT** be used in production.
+| Service      | Port                |
+|--------------|---------------------|
+| API Gateway  | 8080                |
+| Auth Service | 8081                |
+| Data Service | 8082                |
+| Kafka UI     | 8090 *(if enabled)* |
+| MariaDB      | 3306                |
+
+---
+
+## 🔐 Automated Security Scanning
+
+This project includes a **DevSecOps pipeline** with automated scans:
+
+| Tool       | Purpose                         |
+|------------|---------------------------------|
+| Semgrep    | Static analysis (SAST)          |
+| Gitleaks   | Secret detection                |
+| TruffleHog | Deep secret scanning            |
+| OWASP ZAP  | Dynamic testing (DAST)          |
+| Nmap       | Network discovery               |
+| Trivy      | Container & dependency scanning |
+
+📦 After each pipeline run:
+Download the **`security-reports` artifact** to review findings.
 
 ---
 
 ## 🧨 Included Vulnerabilities
 
-The system includes (but is not limited to):
+This system intentionally includes:
 
 * Plain-text password storage
-* Weak authentication logic
-* Missing authorization checks
-* Insecure direct object references (IDOR)
+* Weak authentication
+* Missing authorization (IDOR)
 * No input validation
-* Potential for SQL injection (if extended)
-* Sensitive data exposure via APIs
-* Hardcoded com.bank.service communication
+* SQL injection potential
+* Sensitive data exposure
+* Insecure inter-service communication
+* Kafka/event manipulation risks
+* No rate limiting
 
 ---
 
-## 🧪 Suggested Training Scenarios
+## 🧪 Training Approach
 
-You can use this project to practice:
+This project is designed to be explored, not guided.
 
-* Authentication bypass
-* Privilege escalation
-* Data exposure attacks
-* API abuse
-* Service-to-com.bank.service exploitation
+You are expected to:
+
+* Analyze the codebase
+* Intercept and inspect traffic
+* Discover endpoints manually
+* Use security tools to map the attack surface
 
 ---
 
 ## 📚 Learning Goals
 
-* Understand common web application vulnerabilities
-* Practice exploitation techniques
-* Learn how microservices impact security
-* Compare insecure vs secure implementations
+* Understand vulnerabilities in microservices
+* Practice real attack techniques
+* Learn how security tools detect issues
+* Explore DevSecOps pipelines in practice
 
 ---
 
-## ⚠️ Important Notes
+## ⚠️ Security Disclaimer
 
-* Run this project in an isolated environment (e.g., local machine or lab VM)
-* Do not expose it to the public internet
-* Use only for educational and ethical purposes
+🚨 This application is **intentionally vulnerable**.
+
+* Do NOT deploy in production
+* Do NOT expose publicly
+* Use only in isolated environments
 
 ---
 
 ## 🤝 Contribution
 
-This project is intended as a personal or team training lab. Feel free to extend it with additional vulnerabilities, services, or attack scenarios.
+Contributions are welcome:
+
+* Add new vulnerabilities
+* Expand services (FTP, file storage, messaging)
+* Improve attack scenarios
+* Enhance security tooling
 
 ---
 
 ## 📄 License
 
-This project is provided for educational purposes only. Use responsibly.
+For educational purposes only. Use responsibly.
