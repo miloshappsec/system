@@ -119,17 +119,6 @@ jobs:
       # -------------------------
       # 📤 Upload Reports
       # -------------------------
-      - name: 📂 Debug Semgrep output
-        run: |
-          echo "WORKSPACE: ${{ github.workspace }}"
-      - name: 🔍 Debug files
-        run: |
-          echo "=== ROOT ==="
-          ls -la
-          echo "=== ZAP ==="
-          ls -la zap-reports || true
-          echo "=== TARGET ==="
-          ls -la target || true
       - name: 📤 Upload Reports
         uses: actions/upload-artifact@v4
         with:
