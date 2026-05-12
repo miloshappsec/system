@@ -7,4 +7,5 @@
 
     <include file="db/changelog/001-init.xml"/>
     <include file="db/changelog/002-events.xml"/>
+    <include file="db/changelog/003-seed-data.xml"/>
 </databaseChangeLog>

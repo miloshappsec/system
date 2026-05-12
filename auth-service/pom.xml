@@ -25,6 +25,20 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <!-- Intentionally outdated jjwt 0.9.1 — CVE-bearing version, no minimum key-size enforcement.
+             Allows the 6-byte 'secret' key to work with HS256 (A06 - Vulnerable Components).
+             Crackable: hashcat -a 0 -m 16500 <token> rockyou.txt -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+        <!-- jjwt 0.9.1 uses JAXB internally; required on Java 9+ -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.1</version>
+        </dependency>
     </dependencies>
 
     <build>

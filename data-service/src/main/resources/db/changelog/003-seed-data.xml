@@ -1,0 +1,81 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <!-- Additional users with plaintext passwords (intentionally insecure) -->
+    <changeSet id="seed-users" author="you">
+        <insert tableName="users">
+            <column name="username" value="alice"/>
+            <column name="password" value="alice123"/>
+            <column name="email" value="alice@bank.local"/>
+            <column name="bank_number" value="BANK-1001"/>
+            <column name="role" value="user"/>
+            <column name="balance" valueNumeric="5000.00"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="bob"/>
+            <column name="password" value="bob123"/>
+            <column name="email" value="bob@bank.local"/>
+            <column name="bank_number" value="BANK-1002"/>
+            <column name="role" value="user"/>
+            <column name="balance" valueNumeric="1500.00"/>
+        </insert>
+        <insert tableName="users">
+            <column name="username" value="charlie"/>
+            <column name="password" value="charlie"/>
+            <column name="email" value="charlie@bank.local"/>
+            <column name="bank_number" value="BANK-1003"/>
+            <column name="role" value="user"/>
+            <column name="balance" valueNumeric="200.00"/>
+        </insert>
+    </changeSet>
+
+    <!-- Employee records — salaries intentionally exposed via /data/employees -->
+    <changeSet id="seed-employees" author="you">
+        <insert tableName="employees">
+            <column name="name" value="John Smith"/>
+            <column name="role" value="Branch Manager"/>
+            <column name="salary" valueNumeric="95000.00"/>
+        </insert>
+        <insert tableName="employees">
+            <column name="name" value="Sarah Connor"/>
+            <column name="role" value="Senior Developer"/>
+            <column name="salary" valueNumeric="120000.00"/>
+        </insert>
+        <insert tableName="employees">
+            <column name="name" value="Mike Johnson"/>
+            <column name="role" value="Security Officer"/>
+            <column name="salary" valueNumeric="85000.00"/>
+        </insert>
+        <insert tableName="employees">
+            <column name="name" value="Lisa Chen"/>
+            <column name="role" value="Data Analyst"/>
+            <column name="salary" valueNumeric="72000.00"/>
+        </insert>
+    </changeSet>
+
+    <!-- Seed transactions to make IDOR attack surface meaningful -->
+    <changeSet id="seed-transactions" author="you">
+        <insert tableName="transactions">
+            <column name="sender_id" valueNumeric="1"/>
+            <column name="receiver_id" valueNumeric="2"/>
+            <column name="amount" valueNumeric="500.00"/>
+            <column name="timestamp" valueDate="2026-01-15T10:30:00"/>
+        </insert>
+        <insert tableName="transactions">
+            <column name="sender_id" valueNumeric="2"/>
+            <column name="receiver_id" valueNumeric="3"/>
+            <column name="amount" valueNumeric="200.00"/>
+            <column name="timestamp" valueDate="2026-02-20T14:15:00"/>
+        </insert>
+        <insert tableName="transactions">
+            <column name="sender_id" valueNumeric="3"/>
+            <column name="receiver_id" valueNumeric="1"/>
+            <column name="amount" valueNumeric="50.00"/>
+            <column name="timestamp" valueDate="2026-03-05T09:00:00"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,8 +1,8 @@
 package com.bank.controller;
 
-
 import com.bank.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,20 +16,20 @@ public class UserController {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Value("${services.data-service-url}")
+    private String dataServiceUrl;
+
+    // No authentication required — anyone can create accounts
+    // No input validation — mass assignment (caller can set role=admin, balance=999999)
     @PostMapping("/user")
-    public String login(@RequestBody User user) {
+    public String createUser(@RequestBody User user) {
 
-
-        Boolean created = restTemplate.postForObject(
-                "http://data-service/data/users/", user,
-                Boolean.class
+        User created = restTemplate.postForObject(
+                dataServiceUrl + "/data/users/create",
+                user,
+                User.class
         );
 
-        if (created) {
-            return "OK";
-        }
-
-        return "FAIL";
+        return created != null ? "OK" : "FAIL";
     }
-
 }

@@ -1,11 +1,14 @@
 server:
-  port: 8081
+  port: 8080
   error:
     include-stacktrace: always
     include-message: always
 
-# Override DATA_SERVICE_URL env var for local dev: export DATA_SERVICE_URL=http://localhost:8082
+# Override with env vars for local dev:
+#   export AUTH_SERVICE_URL=http://localhost:8081
+#   export DATA_SERVICE_URL=http://localhost:8082
 services:
+  auth-service-url: ${AUTH_SERVICE_URL:http://auth-service:8081}
   data-service-url: ${DATA_SERVICE_URL:http://data-service:8082}
 
 management:
