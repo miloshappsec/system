@@ -1,6 +1,7 @@
 package com.bank.controller;
 
 import com.bank.model.User;
+import com.bank.repository.UserRepository;
 import com.bank.service.KafkaProducerService;
 import com.bank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class UserController {
     private UserService userService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private KafkaProducerService kafkaProducerService;
 
     @GetMapping("/id/{id}")
@@ -29,6 +33,13 @@ public class UserController {
         return userService.findUserByUsername(username);
     }
 
+
+    // Internal endpoint — called by api-gateway AdminController
+    // No auth here; access control is (weakly) enforced at gateway level
+    @GetMapping("/all-internal")
+    public List<User> getAllInternal() {
+        return userService.getAllUsers();
+    }
 
     @PostMapping("/all")
     public List<User> get(@RequestBody Map<String, String> body) {
@@ -46,5 +57,25 @@ public class UserController {
         userService.createUser(user);
         kafkaProducerService.sendUserCreatedEvent(user.getUsername());
         return user;
+    }
+
+    /**
+     * Update any user account by ID.
+     * <p>
+     * VULNERABILITIES:
+     * - IDOR: no ownership check — any caller can update any user's account
+     * - Mass assignment: caller controls all fields including role and balance
+     * e.g. send { "role": "admin", "balance": 9999999 } to escalate privileges instantly
+     * - No authentication token required
+     */
+    @PutMapping("/{id}")
+    public User update(@PathVariable Long id, @RequestBody User updated) {
+        updated.setId(id);
+        return userRepository.save(updated);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        userRepository.deleteById(id);
     }
 }

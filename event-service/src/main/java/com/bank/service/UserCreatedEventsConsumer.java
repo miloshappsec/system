@@ -14,7 +14,7 @@ public class UserCreatedEventsConsumer {
         this.repository = repository;
     }
 
-    @KafkaListener(topics = "user.created", groupId = "event-service")
+    @KafkaListener(topics = "user-created-events", groupId = "event-service")
     public void consume(String message) {
 
         Event event = new Event();

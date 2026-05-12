@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
+import ChallengesPage from './pages/ChallengesPage'
 
 export default function App() {
   return (
@@ -14,6 +15,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <DashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/challenges"
+          element={
+            <ProtectedRoute>
+              <ChallengesPage />
             </ProtectedRoute>
           }
         />
